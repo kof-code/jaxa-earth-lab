@@ -1,33 +1,22 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JAXA Earth Lab - Test</title>
-    <style>
-        body { font-family: sans-serif; margin: 20px; line-height: 1.6; }
-        .box { border: 2px solid #0070f3; padding: 20px; border-radius: 8px; background: #f0f7ff; }
-        #status { font-weight: bold; color: #0070f3; }
-    </style>
-</head>
-<body>
-    <h1>🛰️ JAXA Earth Lab</h1>
-    <div class="box">
-        <p>現在の状態: <span id="status">Node.js 連携準備中...</span></p>
-        <p>外部ライブラリを使わずに表示テストを行っています。</p>
-        <button onclick="checkData()">データ取得テスト（まだ動きません）</button>
-    </div>
-
     <script>
-        // ページが読み込まれたら実行
-        window.onload = function() {
-            document.getElementById('status').innerText = '表示成功！次はNode.jsを導入しましょう';
-            console.log("基本的な表示に成功しました。");
-        };
+        async function checkData() {
+            const statusEl = document.getElementById('status');
+            statusEl.innerText = 'JAXAからデータを取得中...';
 
-        function checkData() {
-            alert('ここにNode.js経由で取得した衛星データを表示させる予定です！');
+            try {
+                // 自分の作ったNode.js APIを叩く
+                const response = await fetch('/api/hello');
+                const result = await response.json();
+
+                if (result.success || result.elevation !== undefined) {
+                    statusEl.innerText = `成功！東京駅の標高は ${result.elevation}m です。`;
+                    console.log(result);
+                } else {
+                    statusEl.innerText = 'エラー: データが空です';
+                }
+            } catch (e) {
+                statusEl.innerText = 'エラーが発生しました';
+                console.error(e);
+            }
         }
     </script>
-</body>
-</html>
