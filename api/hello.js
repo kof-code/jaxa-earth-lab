@@ -1,5 +1,5 @@
 export default async function handler(request, response) {
-  // JAXA Earth API v2 の正しいデータ取得エンドポイント
+  // JAXA Earth API v2 の正しいデータ取得エンドポイント　あいうえお
   // 標高(ELV)を東京駅(35.6812, 139.7671)で取得する例
   const jaxaUrl = "https://data.earth.jaxa.jp";
 
